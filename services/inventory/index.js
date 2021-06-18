@@ -25,9 +25,25 @@ server.addService(inventoryProto.InventoryService.service, {
             null,
             products.find((product) => product.id == payload.request.id)
         );
-    },    
-});
+    },
+    ExclLivro: (payload, callback) => {
+        let storage = products.find((storage) => storage.id == payload.request.id)
+        storage.quantity--;
+        callback(
+            null,
+            storage
+        );
+    },
+    AddLivro: (payload, callback) => {
+        let storage = products.find((storage) => storage.id == payload.request.id)
+        storage.quantity++;
+        callback(
+            null,
+            storage
+        );
+    },
 
+});
 
 server.bindAsync('127.0.0.1:3002', grpc.ServerCredentials.createInsecure(), () => {
     console.log('Inventory Service running at http://127.0.0.1:3002');
